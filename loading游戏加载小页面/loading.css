@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background-color: #DB4D6D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*水平居中*/
+    /* 垂直居中，   不知道子集的高宽情况下的居中 ，弹性盒子 */
+}
+
+h4 {
+    opacity: 0.8;
+}
+
+.monster {
+    position: relative;
+    width: 110px;
+    height: 100px;
+    border-radius: 20px;
+    background-color: #e55A54;
+    margin: 10px;
+    display: flex;
+    /* 弹性盒子使他们水平居中了 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    /*box-shadow 第一个值是X的偏移量，第二个值是Y的偏移量，第三个值是阴影的偏移量，最后的是阴影的颜色值 */
+    animation: jumping 0.8s infinite alternate;
+}
+
+.monster .eye {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 10px;
+    display: flex;
+    /* 弹性盒子使他们水平排列居中了 */
+    justify-content: center;
+    align-items: center;
+}
+
+.monster .eye .eyeBall {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    background-color: #0C4475;
+    animation: eyemove 1.6s infinite alternate;
+}
+
+.monster .mouth {
+    width: 32%;
+    height: 12px;
+    border-radius: 12px;
+    background-color: #fff;
+}
+.monster::before,
+.monster::after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 20%;
+    height: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    top: -10px;
+    left: 50%;
+}
+.monster::before {
+    transform: translateX(-70%) rotate(45deg);
+}
+.monster::after {
+    transform: translateX(-30%) rotate(-45deg);
+}
+.blue {
+    animation-delay: 0.5s;
+    background-color: #0C4475;
+}
+
+.blue .eyeBall,
+.blue .mouth {
+    background-color: #DB4D6D!important;
+}
+
+@keyframes jumping {
+    50% {
+        top: 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        top: -50px;
+        box-shadow: 0 120px 50px rgba(0, 0, 0, 0.25);
+    }
+}
+
+@keyframes eyemove {
+    0%,
+    10% {
+        transform: translate(50%);
+    }
+    90%,
+    100% {
+        transform: translate(-50%);
+    }
+}
+
+.pageLoading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #0C4475;
+    display: flex;
+    /* 弹性盒子使他们水平排列居中了 */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.8s;
+    /* 淡出时间要0.5s */
+}
+
+.pageLoading .loading {
+    width: 200px;
+    height: 8px;
+    border-radius: 5px;
+    margin-top: 50px;
+    background-color: #fff;
+    overflow: hidden;
+    /* 滚动条为正方形，超出部分隐藏可以让这个滚动条时刻保持原型 */
+}
+
+.pageLoading .loading .bar {
+    width: 0%;
+    height: 100%;
+    background-color: #DB4D6D;
+}
+
+.pageLoading.complete {
+    opacity: 0;
+}
+
+
+/* .pageLoading.complete之间不能有空格，是pageLoading同时具有complete这个属性的时候才有以下的变化 */
+
+.pageLoading.complete .monster {
+    transition: 0.5s;
+    transform: scale(0.1) rotateZ(360deg);
+    /* 当加载到100的时候，monster缩小，旋转 */
+}
